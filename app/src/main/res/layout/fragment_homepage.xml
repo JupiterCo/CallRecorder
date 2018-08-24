@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3">
+
+        <ImageView
+            android:id="@+id/IVRunOrNot"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/icon_notok"
+            android:scaleType="fitCenter"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/TVRunOrNot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Not Working"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:textSize="17sp"
+            android:textColor="#b53b3b"/>
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Register" />
+
+        <Button
+            android:id="@+id/btnUnregister"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Unregister"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>

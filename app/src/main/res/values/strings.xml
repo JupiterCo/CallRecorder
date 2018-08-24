@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name" translatable="false">Call Recorder</string>
+    <string name="email" translatable="false">contact@jupi.online</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+
+    <!-- For Menu Items -->
+    <string name="homepage">Homepage</string>
+    <string name="title_of_records">Records</string>
+    <string name="title_of_homepage">Call Recorder</string>
+
+    <!-- For Record Detected Dialog -->
+    <string name="new_record_detected">New record detected</string>
+    <string name="go_to_records">Go to records</string>
+    <string name="okay">OK</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="duration">Duration</string>
+    <string name="date">Date</string>
+
+    <!-- For Notification -->
+    <string name="click_here_to_listen">Click here to listen</string>
+
+    <!-- For Permissions -->
+    <string name="give_permission">Give Permission</string>
+    <string name="phone">Phone</string>
+    <string name="phone_description">We need this permission to be able to catch incoming and outgoing calls.</string>
+
+    <string name="record_your_call">Record Your Call</string>
+    <string name="record_your_call_description">We would be grateful if you could give this permission to us, so we can record the conversations from the microphone and present them to you.</string>
+
+    <string name="save_your_records">Save Your Records</string>
+    <string name="save_your_records_description">We need this permission to record conversations in your storage, so that you can listen afterwards.</string>
+
+
+
+
+</resources>

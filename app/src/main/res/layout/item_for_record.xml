@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="80dp" android:orientation="horizontal" android:weightSum="1">
+
+    <LinearLayout
+        android:id="@+id/LLImage"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2">
+
+        <ImageView
+            android:id="@+id/IVImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_launcher_round"
+            android:padding="9dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LLMain1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.6">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TVContactName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textSize="17sp"
+                android:text="+905334206867"
+                android:textColor="#3e3f3f"/>
+
+            <ImageView
+                android:id="@+id/IVInOrOut"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/ic_launcher_round"
+                android:layout_below="@id/TVContactName"/>
+
+            <TextView
+                android:id="@+id/TVRecordDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20.08.2018 15:50"
+                android:textSize="12sp"
+                android:textColor="#3e3f3f"
+                android:fontFamily="sans-serif-light"
+                android:layout_below="@+id/TVContactName"
+                android:layout_toEndOf="@+id/IVInOrOut"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="3dp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LLMain2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.10"
+        android:orientation="horizontal"
+        android:gravity="start|center">
+
+        <!--<ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@android:drawable/ic_menu_recent_history"/>-->
+
+        <TextView
+            android:id="@+id/TVDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="02:35"
+            android:textColor="#3e3f3f"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LLMore"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.10"
+        android:orientation="horizontal"
+        android:gravity="start|center">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_more"/>
+
+    </LinearLayout>
+
+</LinearLayout>
