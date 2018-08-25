@@ -18,6 +18,21 @@
     <string name="activate">Activate</string>
     <string name="disable">Disable</string>
 
+    <!-- For Records -->
+    <string name="call">Call</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+
+    <!-- For Delete Dialog -->
+    <string name="are_you_sure">Are you sure you want to delete file?</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- For WantToEnable Dialog -->
+    <string name="not_recording">Call recorder isn\'t active right now, do you want to active and then call?</string>
+    <string name="just_call">Just Call</string>
+    <string name="yes_activate">Activate &amp; Call</string>
+
     <!-- For Record Detected Dialog -->
     <string name="new_record_detected">New record detected</string>
     <string name="go_to_records">Go to records</string>
@@ -39,6 +54,9 @@
 
     <string name="save_your_records">Save Your Records</string>
     <string name="save_your_records_description">We need this permission to record conversations in your storage, so that you can listen afterwards.</string>
+    
+    <string name="contact_description">You can give this permission to view the names stored in your phonebook instead of phone numbers when viewing your records in app. You can skip this permission from above.</string>
+
 
 
 

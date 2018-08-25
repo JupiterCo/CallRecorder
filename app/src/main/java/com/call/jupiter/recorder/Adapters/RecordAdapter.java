@@ -4,32 +4,24 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Handler;
-import android.support.v4.content.FileProvider;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.call.jupiter.recorder.ContextMenuClick;
 import com.call.jupiter.recorder.Helper.AppUtility;
 import com.call.jupiter.recorder.Helper.GlobalValues;
 import com.call.jupiter.recorder.Models.RecordsModel;
 import com.call.jupiter.recorder.R;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by batuhan on 22.08.2018.
@@ -42,10 +34,12 @@ public class RecordAdapter extends BaseAdapter {
     private LinearLayout LLMore, LLImage, LLMain1, LLMain2;
     private ImageView IVInOrOut;
     String recordPath;
+    private ContextMenuClick contextMenuClick;
 
-    public RecordAdapter(Context mContext, List<RecordsModel> mRecordList){
+    public RecordAdapter(Context mContext, List<RecordsModel> mRecordList, ContextMenuClick mContextMenuClick){
         allRecordList = mRecordList;
         context = mContext;
+        contextMenuClick = mContextMenuClick;
     }
 
     @Override
@@ -74,7 +68,7 @@ public class RecordAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View satirView;
+        final View satirView;
         LayoutInflater layoutInflater = ((Activity) context).getLayoutInflater();
 
         satirView = layoutInflater.inflate(R.layout.item_for_record, null);
@@ -101,7 +95,9 @@ public class RecordAdapter extends BaseAdapter {
         LLMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "More'a basıldı.", Toast.LENGTH_SHORT).show();
+                contextMenuClick.onContextMenuClicked(recordsModel.getPhoneNumber(), recordsModel.getRecordPath());
+                ((Activity) context).openContextMenu(satirView);
+
             }
         });
 

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -66,7 +67,9 @@ public class HomepageFragment extends Fragment {
         });
 
         if(Utility.checkIfAlreadyhavePermission(Manifest.permission.READ_PHONE_STATE, getContext())){
-            requestPermissions(new String[]{Manifest.permission.PROCESS_OUTGOING_CALLS}, 2);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                requestPermissions(new String[]{Manifest.permission.PROCESS_OUTGOING_CALLS}, 2);
+            }
         }
     }
 
