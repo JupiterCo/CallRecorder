@@ -60,6 +60,7 @@ public class CallServices extends Service {
             final IntentFilter filter = new IntentFilter();
             filter.addAction(GlobalValues.ACTION_OUT);
             filter.addAction(GlobalValues.ACTION_IN);
+            //filter.addAction(GlobalValues.ACTION_OUT2);
 
             callReceiver = new CallReceiver();
 

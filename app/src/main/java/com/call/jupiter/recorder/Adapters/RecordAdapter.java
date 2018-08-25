@@ -14,12 +14,14 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.call.jupiter.recorder.Helper.AppUtility;
+import com.call.jupiter.recorder.Helper.GlobalValues;
 import com.call.jupiter.recorder.Models.RecordsModel;
 import com.call.jupiter.recorder.R;
 
@@ -38,6 +40,7 @@ public class RecordAdapter extends BaseAdapter {
     private Context context;
     private TextView TVContactName, TVRecordDate, TVDuration;
     private LinearLayout LLMore, LLImage, LLMain1, LLMain2;
+    private ImageView IVInOrOut;
     String recordPath;
 
     public RecordAdapter(Context mContext, List<RecordsModel> mRecordList){
@@ -83,6 +86,7 @@ public class RecordAdapter extends BaseAdapter {
         LLImage = satirView.findViewById(R.id.LLImage);
         LLMain1 = satirView.findViewById(R.id.LLMain1);
         LLMain2 = satirView.findViewById(R.id.LLMain2);
+        IVInOrOut = satirView.findViewById(R.id.IVInOrOut);
 
         if(position == 0 && AppUtility.getRecordCountDifference(context) > 0){
             blink(satirView);
@@ -92,7 +96,7 @@ public class RecordAdapter extends BaseAdapter {
 
         recordPath = recordsModel.getRecordPath();
 
-        setContents(recordsModel.getPhoneNumber(), recordsModel.getRecordDate(), recordsModel.getRecordDuration());
+        setContents(recordsModel.getPhoneNumber(), recordsModel.getRecordDate(), recordsModel.getRecordDuration(), recordsModel.getRecordFrom());
 
         LLMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +130,8 @@ public class RecordAdapter extends BaseAdapter {
     }
 
     private void playRecord(String Path){
+        GlobalValues.isUserPlayRecord = true;
+
         Intent intent = new Intent();
         intent.setAction(android.content.Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.fromFile(new File(Path)), "audio/*");
@@ -134,9 +140,13 @@ public class RecordAdapter extends BaseAdapter {
         context.startActivity(intent);
     }
 
-    private void setContents(String ContactName, String RecordDate, String Duration){
+    private void setContents(String ContactName, String RecordDate, String Duration, String InOrOut){
         TVContactName.setText(ContactName);
         TVRecordDate.setText(RecordDate);
         TVDuration.setText(Duration);
+
+        if(InOrOut.equals("OUT")){
+            IVInOrOut.setImageResource(R.drawable.icon_outgoing_call);
+        }
     }
 }

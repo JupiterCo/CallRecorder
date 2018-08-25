@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.call.jupiter.recorder.Adapters.RecordAdapter;
 import com.call.jupiter.recorder.Helper.AppUtility;
+import com.call.jupiter.recorder.Helper.GlobalValues;
 import com.call.jupiter.recorder.Helper.Utility;
 import com.call.jupiter.recorder.Models.RecordsModel;
 import com.call.jupiter.recorder.R;
@@ -73,7 +74,7 @@ public class RecordsFragment extends Fragment {
         setRecordsMethods();
 
         for (int i = (recordSize - 1); i >= 0; i--) {
-            recordsModelList.add(new RecordsModel(AppUtility.getContactName(getRecords.getFilePhoneNumber(i), getContext()), getRecords.getFileCreationDate(i), getRecords.getFileDuration(i), getRecords.getFilePath(i)));
+            recordsModelList.add(new RecordsModel(AppUtility.getContactName(getRecords.getFilePhoneNumber(i), getContext()), getRecords.getFileCreationDate(i), getRecords.getFileDuration(i), getRecords.getFilePath(i), getRecords.getFileCallFrom(i)));
 
             RecordAdapter recordAdapter = new RecordAdapter(getContext(), recordsModelList);
             LVRecords.setAdapter(recordAdapter);
@@ -91,7 +92,7 @@ public class RecordsFragment extends Fragment {
 
         for (int i = (recordSize - 1); i >= 0; i--) {
             if(getRecords.getFilePhoneNumber(i).contains(searchQuery)){
-                recordsModelList.add(new RecordsModel(AppUtility.getContactName(getRecords.getFilePhoneNumber(i), getContext()), getRecords.getFileCreationDate(i), getRecords.getFileDuration(i), getRecords.getFilePath(i)));
+                recordsModelList.add(new RecordsModel(AppUtility.getContactName(getRecords.getFilePhoneNumber(i), getContext()), getRecords.getFileCreationDate(i), getRecords.getFileDuration(i), getRecords.getFilePath(i), getRecords.getFileCallFrom(i)));
             }
 
             RecordAdapter recordAdapter = new RecordAdapter(getContext(), recordsModelList);
@@ -114,7 +115,11 @@ public class RecordsFragment extends Fragment {
         super.onResume();
         if(!isLoadFromOnCreate){
             if(Utility.checkIfAlreadyhavePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, getContext())){
-                loadRecords();
+                if(!GlobalValues.isUserPlayRecord){
+                    loadRecords();
+                }else{
+                    GlobalValues.isUserPlayRecord = false;
+                }
             }else{
                 goToPermission();
             }

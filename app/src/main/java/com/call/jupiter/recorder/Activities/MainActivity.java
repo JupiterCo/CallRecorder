@@ -2,6 +2,7 @@ package com.call.jupiter.recorder.Activities;
 
 import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
         }
     }
 
@@ -65,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             invalidateOptionsMenu();
         } else if (id == R.id.nav_records) {
             goToFragment(new RecordsFragment(), RECORDFRAGMENTTAG);
+        }else if(id == R.id.nav_email){
+            goToMail();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -127,4 +130,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
     }
+
+    private void goToMail(){
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + getString(R.string.email)));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "About Call Recorder: ");
+
+        startActivity(Intent.createChooser(emailIntent, "Chooser Title"));
+    }
+
 }

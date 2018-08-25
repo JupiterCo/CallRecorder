@@ -121,7 +121,7 @@ public class AppUtility {
         bigText.setSummaryText(context.getString(R.string.click_here_to_listen));
 
         mBuilder.setContentIntent(pendingIntent);
-        mBuilder.setSmallIcon(android.R.drawable.ic_dialog_info);
+        mBuilder.setSmallIcon(R.drawable.app_icon_notification);
         mBuilder.setContentTitle(context.getString(R.string.app_name));
         mBuilder.setContentText(context.getString(R.string.new_record_detected));
         mBuilder.setPriority(Notification.PRIORITY_MAX);

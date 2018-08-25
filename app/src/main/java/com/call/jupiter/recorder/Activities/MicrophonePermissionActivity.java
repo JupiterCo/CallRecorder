@@ -31,8 +31,6 @@ public class MicrophonePermissionActivity extends AppCompatActivity {
     }
 
     private void defineObjects(){
-        //Büyük iconu yükle xmlden.
-
         TVTitle = findViewById(R.id.TVTitle);
         TVDescription = findViewById(R.id.TVDescription);
         btnPermission = findViewById(R.id.btnPermission);

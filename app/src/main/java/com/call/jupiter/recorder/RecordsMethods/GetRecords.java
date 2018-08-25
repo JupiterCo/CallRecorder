@@ -1,6 +1,9 @@
 package com.call.jupiter.recorder.RecordsMethods;
 
 import android.os.Environment;
+import android.util.Log;
+
+import com.call.jupiter.recorder.Helper.AppUtility;
 import com.call.jupiter.recorder.Helper.GlobalValues;
 
 import java.io.File;
@@ -16,6 +19,8 @@ public class GetRecords {
     private String path;
 
     public GetRecords(){
+        AppUtility.createFolder();
+
         path = Environment.getExternalStorageDirectory().toString() + GlobalValues.CallRecorderSaveDirectory;
         File directory = new File(path);
         files = directory.listFiles();
@@ -51,6 +56,12 @@ public class GetRecords {
 
     public String getFilePath(int whichFile){
         return Environment.getExternalStorageDirectory() + GlobalValues.CallRecorderSaveDirectory + "/" + getFileName(whichFile);
+    }
+
+    public String getFileCallFrom(int whichFile){
+        String[] seperated = getFileName(whichFile).split("%");
+
+        return seperated[1];
     }
 
 }

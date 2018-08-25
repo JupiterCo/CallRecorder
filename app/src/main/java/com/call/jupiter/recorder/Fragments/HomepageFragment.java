@@ -3,6 +3,7 @@ package com.call.jupiter.recorder.Fragments;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,9 +27,10 @@ import com.call.jupiter.recorder.Services.CallServices;
 
 public class HomepageFragment extends Fragment {
     View rootView;
-    Button btnRegister, btnUnregister;
-    TextView TVRunOrNot;
+    Button btnActivate;
+    TextView TVRunOrNot, TVRunOrNotDescription;
     ImageView IVRunOrNot;
+    private boolean isMustRunAnimation = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_homepage, container, false);
@@ -44,46 +46,67 @@ public class HomepageFragment extends Fragment {
 
         }
 
-        btnRegister = rootView.findViewById(R.id.btnRegister);
-        btnUnregister = rootView.findViewById(R.id.btnUnregister);
+        btnActivate = rootView.findViewById(R.id.btnActivate);
         TVRunOrNot = rootView.findViewById(R.id.TVRunOrNot);
+        TVRunOrNotDescription = rootView.findViewById(R.id.TVRunOrNotDescription);
         IVRunOrNot = rootView.findViewById(R.id.IVRunOrNot);
 
-        setViewsAboutRunOrNot();
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Avenir-Heavy.ttf");
+        TVRunOrNot.setTypeface(typeface);
+        typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Avenir-Light.otf");
+        TVRunOrNotDescription.setTypeface(typeface);
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        setViewsAboutEnableOrDisable();
+
+        btnActivate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().startService(new Intent(getActivity(), CallServices.class));
-                setViewsAboutRunOrNot();
+                enableDisableProcess();
             }
         });
 
-        btnUnregister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().stopService(new Intent(getActivity(), CallServices.class));
-                GlobalValues.isUserWantToStop = true;
-                setViewsAboutRunOrNot();
-            }
-        });
+        if(Utility.checkIfAlreadyhavePermission(Manifest.permission.READ_PHONE_STATE, getContext())){
+            requestPermissions(new String[]{Manifest.permission.PROCESS_OUTGOING_CALLS}, 2);
+        }
     }
 
-    private void setViewsAboutRunOrNot(){
-        if(Utility.isMyServiceRunning(CallServices.class, getContext())){
-            TVRunOrNot.setText("Working");
-            TVRunOrNot.setTextColor(Color.parseColor("#6aaa3b"));
-            IVRunOrNot.setImageResource(R.mipmap.icon_ok);
+    private void enableDisableProcess(){
+        isMustRunAnimation = true;
 
-            Animation in  = AnimationUtils.loadAnimation(getContext(), R.anim.in_animation);
-            IVRunOrNot.setAnimation(in);
+        if(!Utility.isMyServiceRunning(CallServices.class, getContext())) {
+            getActivity().startService(new Intent(getActivity(), CallServices.class));
         }else{
-            TVRunOrNot.setText("Not Working");
-            TVRunOrNot.setTextColor(Color.parseColor("#b53b3b"));
-            IVRunOrNot.setImageResource(R.mipmap.icon_notok);
+            getActivity().stopService(new Intent(getActivity(), CallServices.class));
+            GlobalValues.isUserWantToStop = true;
 
-            Animation out = AnimationUtils.loadAnimation(getContext(), R.anim.out_animation);
-            IVRunOrNot.setAnimation(out);
+        }
+
+        setViewsAboutEnableOrDisable();
+    }
+
+    private void setViewsAboutEnableOrDisable(){
+        if(Utility.isMyServiceRunning(CallServices.class, getContext())){
+            TVRunOrNot.setText(getString(R.string.recording_activated));
+            TVRunOrNotDescription.setText(getString(R.string.recording_activated_description));
+            IVRunOrNot.setImageResource(R.drawable.icon_active);
+            btnActivate.setText(getString(R.string.disable));
+            btnActivate.setBackgroundResource(R.drawable.permission_button);
+            btnActivate.setTextColor(Color.parseColor("#ff4848"));
+
+            if(isMustRunAnimation){
+                TVRunOrNot.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.in_animation));
+            }
+        }else{
+            TVRunOrNot.setText(getString(R.string.recording_disabled));
+            TVRunOrNotDescription.setText(getString(R.string.recording_disabled_description));
+            IVRunOrNot.setImageResource(R.drawable.icon_deactive);
+            btnActivate.setText(getString(R.string.activate));
+            btnActivate.setBackgroundResource(R.drawable.enable_button);
+            btnActivate.setTextColor(Color.parseColor("#5fbc6f"));
+
+            if(isMustRunAnimation){
+                TVRunOrNot.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.out_animation));
+            }
         }
     }
 
@@ -101,7 +124,8 @@ public class HomepageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        setViewsAboutRunOrNot();
+        isMustRunAnimation = false;
+        setViewsAboutEnableOrDisable();
 
         if(Utility.checkIfAlreadyhavePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, getContext())){
             if(AppUtility.getRecordCountDifference(getContext()) > 0){
@@ -114,5 +138,7 @@ public class HomepageFragment extends Fragment {
 
     private void goToPermission(){
         AppUtility.goToOtherPermission(getActivity(), getContext(), false);
+
+        AppUtility.createFolder();
     }
 }

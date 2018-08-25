@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="#fbfcfd">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.3">
+        android:layout_weight="0.15">
 
     </LinearLayout>
 
@@ -20,39 +21,66 @@
             android:id="@+id/IVRunOrNot"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@mipmap/icon_notok"
-            android:scaleType="fitCenter"/>
+            android:src="@drawable/icon_deactive"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.4"
-        android:orientation="vertical">
+        android:layout_weight="0.55"
+        android:orientation="vertical"
+        android:weightSum="10">
 
-        <TextView
-            android:id="@+id/TVRunOrNot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Not Working"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:textSize="17sp"
-            android:textColor="#b53b3b"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="Register" />
+            <TextView
+                android:id="@+id/TVRunOrNot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recording_disabled"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:textSize="22sp"
+                android:textColor="#747e8f"/>
 
-        <Button
-            android:id="@+id/btnUnregister"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="Unregister"/>
+            <TextView
+                android:id="@+id/TVRunOrNotDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recording_disabled_description"
+                android:textColor="#747e8f"
+                android:textSize="13.8sp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btnActivate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/activate"
+                android:textAllCaps="false"
+                android:textColor="#5fbc6f"
+                android:textSize="15sp"
+                android:background="@drawable/enable_button" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

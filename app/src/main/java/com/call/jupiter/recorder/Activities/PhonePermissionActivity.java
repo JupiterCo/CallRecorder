@@ -31,8 +31,6 @@ public class PhonePermissionActivity extends AppCompatActivity {
     }
 
     private void defineObjects(){
-        //Büyük iconu yükle xmlden.
-
         TVTitle = findViewById(R.id.TVTitle);
         TVDescription = findViewById(R.id.TVDescription);
         btnPermission = findViewById(R.id.btnPermission);
@@ -68,6 +66,8 @@ public class PhonePermissionActivity extends AppCompatActivity {
     }
 
     private void goToOtherPermission(){
+        ActivityCompat.requestPermissions(PhonePermissionActivity.this, new String[]{Manifest.permission.PROCESS_OUTGOING_CALLS}, 2);
+
         AppUtility.goToOtherPermission(this, this, false);
     }
 

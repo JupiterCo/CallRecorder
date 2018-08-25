@@ -10,4 +10,5 @@ public class GlobalValues {
 
     public static String CallRecorderSaveDirectory = "/CallRecorderRecords";
     public static boolean isUserWantToStop = false;
+    public static boolean isUserPlayRecord = false;
 }
