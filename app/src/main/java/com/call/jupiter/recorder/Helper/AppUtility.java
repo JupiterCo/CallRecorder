@@ -10,6 +10,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
@@ -17,13 +18,16 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
+import com.call.jupiter.recorder.Activities.ContactPermissionActivity;
 import com.call.jupiter.recorder.Activities.MainActivity;
 import com.call.jupiter.recorder.Activities.MicrophonePermissionActivity;
 import com.call.jupiter.recorder.Activities.PhonePermissionActivity;
 import com.call.jupiter.recorder.Activities.WriteExternalStoragePermissionActivity;
 import com.call.jupiter.recorder.R;
 import com.call.jupiter.recorder.Fragments.RecordsFragment;
+import com.call.jupiter.recorder.Receiver.CallReceiver;
 import com.call.jupiter.recorder.RecordsMethods.GetRecords;
 
 import java.io.File;
@@ -165,6 +169,8 @@ public class AppUtility {
     }
 
     public static void goToOtherPermission(Activity activity, Context context, boolean isMainActivity){
+        GSharedPreferences sharedPreferences = new GSharedPreferences(context);
+
         if(!Utility.checkIfAlreadyhavePermission(Manifest.permission.READ_PHONE_STATE, activity)){
             context.startActivity(new Intent(context, PhonePermissionActivity.class));
             activity.overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
@@ -173,6 +179,9 @@ public class AppUtility {
             activity.overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
         }else if(!Utility.checkIfAlreadyhavePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, activity)){
             context.startActivity(new Intent(context, WriteExternalStoragePermissionActivity.class));
+            activity.overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+        }else if(!Utility.checkIfAlreadyhavePermission(Manifest.permission.READ_CONTACTS, activity) && !sharedPreferences.GET_IS_CONTACT_PERMISSION_SKIP()){
+            context.startActivity(new Intent(context, ContactPermissionActivity.class));
             activity.overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
         }else{
             if(!isMainActivity){

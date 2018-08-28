@@ -22,7 +22,7 @@
         android:screenOrientation="portrait"
         android:name=".MyApplication">
 
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name=".Activities.MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,18 +31,10 @@
         </activity>
 
         <activity android:name=".Activities.PhonePermissionActivity" android:screenOrientation="portrait" />
-        <activity android:name=".Activities.MicrophonePermissionActivity" />
-        <activity android:name=".Activities.WriteExternalStoragePermissionActivity" />
+        <activity android:name=".Activities.MicrophonePermissionActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activities.WriteExternalStoragePermissionActivity"  android:screenOrientation="portrait" />
+        <activity android:name=".Activities.ContactPermissionActivity" android:screenOrientation="portrait" />
 
-        <!--<receiver android:name=".Receiver.CallReceiver">
-            <intent-filter >
-                <action
-                    android:name="android.intent.action.NEW_OUTGOING_CALL"
-                    android:priority="10000"/>
-                <action android:name="android.intent.action.PHONE_STATE" />
-
-            </intent-filter>
-        </receiver>-->
 
         <receiver
             android:name=".Receiver.RestartReceiver"
@@ -55,7 +47,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".Services.CallServices" />
+        <service android:name=".Services.CallServices" android:enabled="true" />
 
         <provider
             android:name=".Helper.GenericFileProvider"

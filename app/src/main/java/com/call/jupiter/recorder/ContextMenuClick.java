@@ -5,5 +5,5 @@ package com.call.jupiter.recorder;
  */
 
 public interface ContextMenuClick {
-    void onContextMenuClicked(String phoneNumber, String recordPath);
+    void onContextMenuClicked(String phoneNumber, String recordPath, String fileName);
 }

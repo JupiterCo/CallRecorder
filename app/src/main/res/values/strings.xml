@@ -18,15 +18,17 @@
     <string name="activate">Activate</string>
     <string name="disable">Disable</string>
 
-    <!-- For Records -->
+    <!-- For Disable Dialog -->
+    <string name="want_to_disable">Do you want to disable it?</string>
+
+    <!-- For Records Item Menu -->
     <string name="call">Call</string>
+    <string name="play">Play</string>
     <string name="share">Share</string>
     <string name="delete">Delete</string>
 
     <!-- For Delete Dialog -->
     <string name="are_you_sure">Are you sure you want to delete file?</string>
-    <string name="yes">Yes</string>
-    <string name="cancel">Cancel</string>
 
     <!-- For WantToEnable Dialog -->
     <string name="not_recording">Call recorder isn\'t active right now, do you want to active and then call?</string>
@@ -36,7 +38,6 @@
     <!-- For Record Detected Dialog -->
     <string name="new_record_detected">New record detected</string>
     <string name="go_to_records">Go to records</string>
-    <string name="okay">OK</string>
     <string name="phone_number">Phone Number</string>
     <string name="duration">Duration</string>
     <string name="date">Date</string>
@@ -57,6 +58,11 @@
     
     <string name="contact_description">You can give this permission to view the names stored in your phonebook instead of phone numbers when viewing your records in app. You can skip this permission from above.</string>
 
+    <!-- GENERAL -->
+    <string name="skip">SKIP</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="okay">OK</string>
 
 
 

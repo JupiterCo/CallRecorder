@@ -52,7 +52,7 @@ public class RecordsFragment extends Fragment{
     List<RecordsModel> recordsModelList = new ArrayList<>();
     boolean isLoadFromOnCreate = false;
     ContextMenuClick listener;
-    String contextPhoneNumber, contextRecordPath;
+    String contextPhoneNumber, contextRecordPath, contextFilename;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_records, container, false);
@@ -70,10 +70,10 @@ public class RecordsFragment extends Fragment{
 
         listener = new ContextMenuClick() {
             @Override
-            public void onContextMenuClicked(String phoneNumber, String recordPath) {
+            public void onContextMenuClicked(String phoneNumber, String recordPath, String fileName) {
                 contextPhoneNumber = phoneNumber;
                 contextRecordPath = recordPath;
-                Log.d("Kontrol", "Path: " + recordPath);
+                contextFilename = fileName;
             }
         };
 
@@ -102,7 +102,7 @@ public class RecordsFragment extends Fragment{
         setRecordsMethods();
 
         for (int i = (recordSize - 1); i >= 0; i--) {
-            recordsModelList.add(new RecordsModel(AppUtility.getContactName(getRecords.getFilePhoneNumber(i), getContext()), getRecords.getFileCreationDate(i), getRecords.getFileDuration(i), getRecords.getFilePath(i), getRecords.getFileCallFrom(i)));
+            recordsModelList.add(new RecordsModel(AppUtility.getContactName(getRecords.getFilePhoneNumber(i), getContext()), getRecords.getFileCreationDate(i), getRecords.getFileDuration(i), getRecords.getFilePath(i), getRecords.getFileCallFrom(i), getRecords.getFileName(i)));
 
             RecordAdapter recordAdapter = new RecordAdapter(getContext(), recordsModelList, listener);
             LVRecords.setAdapter(recordAdapter);
@@ -120,7 +120,7 @@ public class RecordsFragment extends Fragment{
 
         for (int i = (recordSize - 1); i >= 0; i--) {
             if(getRecords.getFilePhoneNumber(i).contains(searchQuery)){
-                recordsModelList.add(new RecordsModel(AppUtility.getContactName(getRecords.getFilePhoneNumber(i), getContext()), getRecords.getFileCreationDate(i), getRecords.getFileDuration(i), getRecords.getFilePath(i), getRecords.getFileCallFrom(i)));
+                recordsModelList.add(new RecordsModel(AppUtility.getContactName(getRecords.getFilePhoneNumber(i), getContext()), getRecords.getFileCreationDate(i), getRecords.getFileDuration(i), getRecords.getFilePath(i), getRecords.getFileCallFrom(i), getRecords.getFileName(i)));
             }
 
             RecordAdapter recordAdapter = new RecordAdapter(getContext(), recordsModelList, listener);
@@ -162,6 +162,12 @@ public class RecordsFragment extends Fragment{
             case R.id.menu_delete:
                 showDeleteDialog();
                 return true;
+            case R.id.menu_play:
+                goToPlay();
+                return true;
+            case R.id.menu_share:
+                goToShare();
+                return true;
             default:
                 return super.onContextItemSelected(item);
         }
@@ -198,6 +204,18 @@ public class RecordsFragment extends Fragment{
         AppUtility.goToOtherPermission(getActivity(), getContext(), false);
     }
 
+    private void goToShare(){
+        File filelocation = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + GlobalValues.CallRecorderSaveDirectory, contextFilename);
+        Uri path = Uri.fromFile(filelocation);
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent .setType("vnd.android.cursor.dir/email");
+        /*String to[] = {"asd@gmail.com"};
+        emailIntent .putExtra(Intent.EXTRA_EMAIL, to);*/
+        emailIntent .putExtra(Intent.EXTRA_STREAM, path);
+        emailIntent .putExtra(Intent.EXTRA_SUBJECT, "Call Recorder File");
+        startActivity(Intent.createChooser(emailIntent , "Send email..."));
+    }
+
     private void goToCall(){
         String uri = "tel:" + contextPhoneNumber.trim() ;
         Intent intent = new Intent(Intent.ACTION_DIAL);
@@ -212,6 +230,17 @@ public class RecordsFragment extends Fragment{
                 loadRecords();
             }
         }
+    }
+
+    private void goToPlay(){
+        GlobalValues.isUserPlayRecord = true;
+
+        Intent intent = new Intent();
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(new File(contextRecordPath)), "audio/*");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        startActivity(intent);
     }
 
     private void showDeleteDialog(){

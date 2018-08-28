@@ -1,16 +1,19 @@
 package com.call.jupiter.recorder.Fragments;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,7 +23,10 @@ import com.call.jupiter.recorder.Helper.AppUtility;
 import com.call.jupiter.recorder.Helper.GlobalValues;
 import com.call.jupiter.recorder.Helper.Utility;
 import com.call.jupiter.recorder.R;
+import com.call.jupiter.recorder.Receiver.CallReceiver;
 import com.call.jupiter.recorder.Services.CallServices;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by batuhan on 21.08.2018.
@@ -32,6 +38,8 @@ public class HomepageFragment extends Fragment {
     TextView TVRunOrNot, TVRunOrNotDescription;
     ImageView IVRunOrNot;
     private boolean isMustRunAnimation = false;
+    private static String TAG = "Kontrol";
+    CallReceiver callReceiver;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_homepage, container, false);
@@ -75,16 +83,20 @@ public class HomepageFragment extends Fragment {
 
     private void enableDisableProcess(){
         isMustRunAnimation = true;
-
         if(!Utility.isMyServiceRunning(CallServices.class, getContext())) {
             getActivity().startService(new Intent(getActivity(), CallServices.class));
+
+            /*Intent serviceIntent = new Intent(getContext() ,CallServices.class);
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){
+                getContext().startForegroundService(serviceIntent);
+            }else{
+                getContext().startService(serviceIntent);
+            }*/
+            setViewsAboutEnableOrDisable();
         }else{
-            getActivity().stopService(new Intent(getActivity(), CallServices.class));
-            GlobalValues.isUserWantToStop = true;
-
+            showWantToDisableItDialog();
         }
-
-        setViewsAboutEnableOrDisable();
     }
 
     private void setViewsAboutEnableOrDisable(){
@@ -111,6 +123,26 @@ public class HomepageFragment extends Fragment {
                 TVRunOrNot.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.out_animation));
             }
         }
+    }
+
+    private void showWantToDisableItDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(getContext().getString(R.string.want_to_disable))
+                .setCancelable(false)
+                .setPositiveButton(getContext().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        getActivity().stopService(new Intent(getActivity(), CallServices.class));
+                        GlobalValues.isUserWantToStop = true;
+                        setViewsAboutEnableOrDisable();
+                    }
+                })
+                .setNegativeButton(getContext().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override

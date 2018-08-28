@@ -12,13 +12,15 @@ public class RecordsModel {
     private String recordDuration;
     private String recordPath;
     private String recordFrom;
+    private String recordFileName;
 
-    public RecordsModel(String  mphoneNumber, String mrecordDate, String mrecordDuration, String mrecordPath, String mInOrOut){
+    public RecordsModel(String  mphoneNumber, String mrecordDate, String mrecordDuration, String mrecordPath, String mInOrOut, String mRecordFileName){
         setPhoneNumber(mphoneNumber);
         setRecordDate(mrecordDate);
         setRecordDuration(mrecordDuration);
         setRecordPath(mrecordPath);
         setRecordFrom(mInOrOut);
+        setRecordFileName(mRecordFileName);
     }
 
     public String getPhoneNumber() {
@@ -59,5 +61,13 @@ public class RecordsModel {
 
     public void setRecordFrom(String recordFrom) {
         this.recordFrom = recordFrom;
+    }
+
+    public String getRecordFileName() {
+        return recordFileName;
+    }
+
+    public void setRecordFileName(String recordFileName) {
+        this.recordFileName = recordFileName;
     }
 }

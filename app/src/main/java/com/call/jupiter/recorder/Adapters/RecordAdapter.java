@@ -95,7 +95,8 @@ public class RecordAdapter extends BaseAdapter {
         LLMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                contextMenuClick.onContextMenuClicked(recordsModel.getPhoneNumber(), recordsModel.getRecordPath());
+                contextMenuClick.onContextMenuClicked(recordsModel.getPhoneNumber(), recordsModel.getRecordPath(), recordsModel.getRecordFileName());
+
                 ((Activity) context).openContextMenu(satirView);
 
             }

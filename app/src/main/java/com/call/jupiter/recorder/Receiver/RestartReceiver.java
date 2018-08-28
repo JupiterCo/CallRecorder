@@ -25,7 +25,5 @@ public class RestartReceiver extends BroadcastReceiver {
                 context.startService(serviceIntent);
             }
         }
-
-
     }
 }

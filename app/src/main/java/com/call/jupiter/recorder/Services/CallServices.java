@@ -41,17 +41,20 @@ public class CallServices extends Service {
     public void onCreate() {
         super.onCreate();
         startForeground(1, new Notification());
+
+        registerCallReceiver();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        registerCallReceiver();
+        //registerCallReceiver();
 
-        return START_STICKY;
+        //return START_STICKY;
+        return super.onStartCommand(intent, flags, startId);
     }
 
     public void registerCallReceiver(){
-        Log.d("KONTROL", "register Call Receiver");
+        Log.d("Kontrol", "register Call Receiver");
         try {
             if (callReceiver != null) {
                 unregisterReceiver(callReceiver);
@@ -60,13 +63,13 @@ public class CallServices extends Service {
             final IntentFilter filter = new IntentFilter();
             filter.addAction(GlobalValues.ACTION_OUT);
             filter.addAction(GlobalValues.ACTION_IN);
-            //filter.addAction(GlobalValues.ACTION_OUT2);
+            filter.setPriority(9999);
 
             callReceiver = new CallReceiver();
 
             registerReceiver(callReceiver, filter);
         } catch (Exception e) {
-            Log.d("KONTROL", "broadcastReceiver is already unregistered");
+            Log.d("Kontrol", "broadcastReceiver is already unregistered");
             callReceiver = null;
         }
     }
