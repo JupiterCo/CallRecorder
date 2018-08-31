@@ -5,6 +5,8 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import java.lang.reflect.Method;
 
 /**
@@ -16,6 +18,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         settingsForUpper24APIFileListen();
     }
 
