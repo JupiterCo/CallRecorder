@@ -24,6 +24,7 @@ import com.anjlab.android.iab.v3.TransactionDetails;
 import com.call.jupiter.recorder.Fragments.HomepageFragment;
 import com.call.jupiter.recorder.Fragments.RecordsFragment;
 import com.call.jupiter.recorder.Helper.AppUtility;
+import com.call.jupiter.recorder.Helper.GSharedPreferences;
 import com.call.jupiter.recorder.Helper.Utility;
 import com.call.jupiter.recorder.R;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static String TAG = "Kontrol";
     MenuItem item_search, item_remove_ads;
     boolean isMenuItemChangeReady = false, isReadyToPurchase = false;
+    GSharedPreferences sharedPreferences;
     BillingProcessor bp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        sharedPreferences = new GSharedPreferences(this);
+
         bp = new BillingProcessor(this, getString(R.string.google_play_license_key), this);
+
+        if(bp.isPurchased(getString(R.string.remove_ads_product_id))){
+            sharedPreferences.SET_IS_USER_PURCHASE_REMOVE_ADS(true);
+        }
 
         goToFragment(new HomepageFragment(), HOMEPAGEFRAGMENTTAG);
     }
@@ -71,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_homepage) {
             goToFragment(new HomepageFragment(), HOMEPAGEFRAGMENTTAG);
-            //invalidateOptionsMenu();
         } else if (id == R.id.nav_records) {
             goToFragment(new RecordsFragment(), RECORDFRAGMENTTAG);
         }else if(id == R.id.nav_email){
@@ -133,7 +140,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.action_search).setVisible(false);
-        menu.findItem(R.id.action_remove_ads).setVisible(true);
+        if (!sharedPreferences.GET_IS_USER_PURCHASE_REMOVE_ADS()){
+            menu.findItem(R.id.action_remove_ads).setVisible(true);
+        }else{
+            menu.findItem(R.id.action_remove_ads).setVisible(false);
+        }
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -149,7 +160,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 item_remove_ads.setVisible(false);
             }else{
                 item_search.setVisible(false);
-                item_remove_ads.setVisible(true);
+
+                if (!sharedPreferences.GET_IS_USER_PURCHASE_REMOVE_ADS()){
+                    item_remove_ads.setVisible(true);
+                }else{
+                    item_remove_ads.setVisible(false);
+                }
             }
         }
     }
@@ -164,6 +180,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onProductPurchased(@NonNull String productId, @Nullable TransactionDetails details) {
         Log.d(TAG, "onProductPurchased: ");
+        if(productId.equals(getString(R.string.remove_ads_product_id))){
+            sharedPreferences.SET_IS_USER_PURCHASE_REMOVE_ADS(true);
+            item_remove_ads.setVisible(false);
+        }
     }
 
     @Override

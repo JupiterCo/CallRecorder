@@ -23,6 +23,7 @@ public class GSharedPreferences {
     /** User Datas**/
     private static final String LAST_RECORD_COUNT = "LastRecordCount";
     private static final String CONTACT_PERMISSION = "ContactPermission";
+    private static final String IS_USER_PURCHASE_REMOVE_ADS = "IsUserPurchaseRemoveAds";
 
 
     public int GET_LAST_RECORD_COUNT(){ return sharedPreferences.getInt(LAST_RECORD_COUNT, 0); }
@@ -38,6 +39,15 @@ public class GSharedPreferences {
 
     public void SET_IS_CONTACT_PERMISSION_SKIP(boolean contactPermission){
         editor.putBoolean(CONTACT_PERMISSION, contactPermission);
+        editor.commit();
+    }
+
+    public boolean GET_IS_USER_PURCHASE_REMOVE_ADS(){
+        return sharedPreferences.getBoolean(IS_USER_PURCHASE_REMOVE_ADS, false);
+    }
+
+    public void SET_IS_USER_PURCHASE_REMOVE_ADS(boolean isUserRemoveAds){
+        editor.putBoolean(IS_USER_PURCHASE_REMOVE_ADS, isUserRemoveAds);
         editor.commit();
     }
 }

@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.call.jupiter.recorder.Adapters.RecordAdapter;
 import com.call.jupiter.recorder.ContextMenuClick;
+import com.call.jupiter.recorder.Helper.Advertising;
 import com.call.jupiter.recorder.Helper.AppUtility;
 import com.call.jupiter.recorder.Helper.GlobalValues;
 import com.call.jupiter.recorder.Helper.Utility;
@@ -59,6 +60,7 @@ public class RecordsFragment extends Fragment {
     String contextPhoneNumber, contextRecordPath, contextFilename;
     private AdView mAdView;
     private InterstitialAd mInterstitialAd;
+    Advertising ad;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_records, container, false);
@@ -104,8 +106,9 @@ public class RecordsFragment extends Fragment {
             goToPermission();
         }
 
-        showBanner();
-        showInterstitial();
+        ad = new Advertising(getContext());
+        ad.showBanner(mAdView);
+        ad.showInterstitial(mInterstitialAd);
     }
 
     private void loadRecords(){
@@ -243,7 +246,7 @@ public class RecordsFragment extends Fragment {
         if(file.exists()){
             if(file.delete()){
                 loadRecords();
-                showInterstitial();
+                ad.showInterstitial(mInterstitialAd);
             }
         }
     }
@@ -300,24 +303,4 @@ public class RecordsFragment extends Fragment {
         AlertDialog alert = builder.create();
         alert.show();
     }
-
-    private void showBanner(){
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-    }
-
-    private void showInterstitial(){
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-        mInterstitialAd.setAdListener(new AdListener(){
-            @Override
-            public void onAdLoaded() {
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                }
-            }
-        });
-    }
-
 }
