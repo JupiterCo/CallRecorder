@@ -9,7 +9,7 @@
         android:id="@+id/TVRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Records"
+        android:text="@string/no_records"
         android:layout_centerInParent="true" />
 
     <ProgressBar
@@ -28,6 +28,17 @@
         android:layout_height="match_parent"
         android:divider="@null"
         android:dividerHeight="0dp"
-        android:choiceMode="singleChoice"/>
+        android:choiceMode="singleChoice"
+        android:layout_marginBottom="50dp"/>
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

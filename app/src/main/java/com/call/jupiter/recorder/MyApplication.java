@@ -6,6 +6,8 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.ads.MobileAds;
+
 import io.fabric.sdk.android.Fabric;
 import java.lang.reflect.Method;
 
@@ -19,6 +21,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
+        MobileAds.initialize(this, getString(R.string.admob_app_id));
         settingsForUpper24APIFileListen();
     }
 

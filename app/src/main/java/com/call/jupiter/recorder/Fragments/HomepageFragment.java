@@ -25,6 +25,11 @@ import com.call.jupiter.recorder.Helper.Utility;
 import com.call.jupiter.recorder.R;
 import com.call.jupiter.recorder.Receiver.CallReceiver;
 import com.call.jupiter.recorder.Services.CallServices;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 import static android.content.ContentValues.TAG;
 
@@ -40,6 +45,8 @@ public class HomepageFragment extends Fragment {
     private boolean isMustRunAnimation = false;
     private static String TAG = "Kontrol";
     CallReceiver callReceiver;
+    private AdView mAdView;
+    private InterstitialAd mInterstitialAd;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_homepage, container, false);
@@ -59,6 +66,8 @@ public class HomepageFragment extends Fragment {
         TVRunOrNot = rootView.findViewById(R.id.TVRunOrNot);
         TVRunOrNotDescription = rootView.findViewById(R.id.TVRunOrNotDescription);
         IVRunOrNot = rootView.findViewById(R.id.IVRunOrNot);
+        mAdView = rootView.findViewById(R.id.adView);
+        mInterstitialAd = new InterstitialAd(getContext());
 
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Avenir-Heavy.ttf");
         TVRunOrNot.setTypeface(typeface);
@@ -79,6 +88,9 @@ public class HomepageFragment extends Fragment {
                 requestPermissions(new String[]{Manifest.permission.PROCESS_OUTGOING_CALLS}, 2);
             }
         }
+
+        /*showBanner();
+        showInterstitial();*/
     }
 
     private void enableDisableProcess(){
@@ -143,6 +155,25 @@ public class HomepageFragment extends Fragment {
                 });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private void showBanner(){
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+    }
+
+    private void showInterstitial(){
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        mInterstitialAd.setAdListener(new AdListener(){
+            @Override
+            public void onAdLoaded() {
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                }
+            }
+        });
     }
 
     @Override

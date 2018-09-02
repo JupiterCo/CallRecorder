@@ -33,6 +33,10 @@ import com.call.jupiter.recorder.Models.RecordsModel;
 import com.call.jupiter.recorder.R;
 import com.call.jupiter.recorder.RecordsMethods.GetRecords;
 import com.call.jupiter.recorder.Services.CallServices;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -42,7 +46,7 @@ import java.util.List;
  * Created by batuhan on 21.08.2018.
  */
 
-public class RecordsFragment extends Fragment{
+public class RecordsFragment extends Fragment {
     View rootView;
     GetRecords getRecords;
     int recordSize;
@@ -53,6 +57,8 @@ public class RecordsFragment extends Fragment{
     boolean isLoadFromOnCreate = false;
     ContextMenuClick listener;
     String contextPhoneNumber, contextRecordPath, contextFilename;
+    private AdView mAdView;
+    private InterstitialAd mInterstitialAd;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_records, container, false);
@@ -80,6 +86,8 @@ public class RecordsFragment extends Fragment{
         TVRecord = rootView.findViewById(R.id.TVRecord);
         progressBar = rootView.findViewById(R.id.progressBar1);
         LVRecords = rootView.findViewById(R.id.LVRecords);
+        mAdView = rootView.findViewById(R.id.adView);
+        mInterstitialAd = new InterstitialAd(getContext());
         registerForContextMenu(LVRecords);
 
         if(Utility.checkIfAlreadyhavePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, getContext())) {
@@ -95,22 +103,29 @@ public class RecordsFragment extends Fragment{
         }else{
             goToPermission();
         }
+
+        showBanner();
+        showInterstitial();
     }
 
     private void loadRecords(){
         recordsModelList.clear();
         setRecordsMethods();
 
-        for (int i = (recordSize - 1); i >= 0; i--) {
-            recordsModelList.add(new RecordsModel(AppUtility.getContactName(getRecords.getFilePhoneNumber(i), getContext()), getRecords.getFileCreationDate(i), getRecords.getFileDuration(i), getRecords.getFilePath(i), getRecords.getFileCallFrom(i), getRecords.getFileName(i)));
+        if(recordSize > 0){
+            for (int i = (recordSize - 1); i >= 0; i--) {
+                recordsModelList.add(new RecordsModel(AppUtility.getContactName(getRecords.getFilePhoneNumber(i), getContext()), getRecords.getFileCreationDate(i), getRecords.getFileDuration(i), getRecords.getFilePath(i), getRecords.getFileCallFrom(i), getRecords.getFileName(i)));
 
-            RecordAdapter recordAdapter = new RecordAdapter(getContext(), recordsModelList, listener);
-            LVRecords.setAdapter(recordAdapter);
+                RecordAdapter recordAdapter = new RecordAdapter(getContext(), recordsModelList, listener);
+                LVRecords.setAdapter(recordAdapter);
 
-            if(i == 0){
-                progressBar.setVisibility(View.GONE);
-                TVRecord.setVisibility(View.GONE);
+                if(i == 0){
+                    progressBar.setVisibility(View.GONE);
+                    TVRecord.setVisibility(View.GONE);
+                }
             }
+        }else{
+            TVRecord.setVisibility(View.VISIBLE);
         }
     }
 
@@ -228,6 +243,7 @@ public class RecordsFragment extends Fragment{
         if(file.exists()){
             if(file.delete()){
                 loadRecords();
+                showInterstitial();
             }
         }
     }
@@ -283,6 +299,25 @@ public class RecordsFragment extends Fragment{
                 });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private void showBanner(){
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+    }
+
+    private void showInterstitial(){
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        mInterstitialAd.setAdListener(new AdListener(){
+            @Override
+            public void onAdLoaded() {
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                }
+            }
+        });
     }
 
 }

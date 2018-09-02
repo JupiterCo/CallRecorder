@@ -8,5 +8,12 @@
         android:icon="@android:drawable/ic_menu_search"
         android:title="Search"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_remove_ads"
+        android:icon="@drawable/icon_remove_ads"
+        android:title="Remove Ads"
+        app:showAsAction="ifRoom" />
+
 </menu>
