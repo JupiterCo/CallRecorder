@@ -14,6 +14,10 @@ import android.widget.TextView;
 import com.call.jupiter.recorder.Helper.AppUtility;
 import com.call.jupiter.recorder.Helper.Utility;
 import com.call.jupiter.recorder.R;
+import com.flurry.android.FlurryAgent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by batuhan on 24.08.2018.
@@ -58,6 +62,8 @@ public class PhonePermissionActivity extends AppCompatActivity {
             case 1: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     goToOtherPermission();
+
+                    AppUtility.sendEventLogToFlurry("Permission", "Phone", "Granted");
                 } else {
                     Utility.showAlertDialogOneButton(PhonePermissionActivity.this, getString(R.string.phone_description));
                 }

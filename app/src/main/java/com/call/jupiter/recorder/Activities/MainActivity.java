@@ -27,6 +27,14 @@ import com.call.jupiter.recorder.Helper.AppUtility;
 import com.call.jupiter.recorder.Helper.GSharedPreferences;
 import com.call.jupiter.recorder.Helper.Utility;
 import com.call.jupiter.recorder.R;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.PurchaseEvent;
+import com.flurry.android.FlurryAgent;
+
+import java.math.BigDecimal;
+import java.util.Currency;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, BillingProcessor.IBillingHandler {
     public static String RECORDFRAGMENTTAG = "Records";
@@ -116,6 +124,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public boolean onMenuItemClick(MenuItem item) {
                 if (isReadyToPurchase){
                     bp.purchase(MainActivity.this, getString(R.string.remove_ads_product_id));
+
+                    AppUtility.sendEventLogToFlurry("Purchase", "Remove Ads", "Clicked");
                 }
                 return true;
             }
@@ -183,6 +193,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(productId.equals(getString(R.string.remove_ads_product_id))){
             sharedPreferences.SET_IS_USER_PURCHASE_REMOVE_ADS(true);
             item_remove_ads.setVisible(false);
+
+            Answers.getInstance().logPurchase(new PurchaseEvent()
+                    .putItemPrice(BigDecimal.valueOf(1.99))
+                    .putCurrency(Currency.getInstance("USD"))
+                    .putItemName("Remove Ads")
+                    .putItemType("Apparel")
+                    .putItemId("remove_ads_1")
+                    .putSuccess(true));
+
+
+            AppUtility.sendEventLogToFlurry("Purchase", "Remove Ads", "Purchased");
         }
     }
 

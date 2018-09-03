@@ -58,6 +58,9 @@ public class WriteExternalStoragePermissionActivity extends AppCompatActivity {
             case 1: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     goToOtherPermission();
+
+
+                    AppUtility.sendEventLogToFlurry("Permission", "WriteExternal", "Granted");
                 } else {
                     Utility.showAlertDialogOneButton(WriteExternalStoragePermissionActivity.this, getString(R.string.save_your_records_description));
                 }

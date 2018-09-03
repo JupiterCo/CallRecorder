@@ -108,7 +108,7 @@ public class RecordsFragment extends Fragment {
 
         ad = new Advertising(getContext());
         ad.showBanner(mAdView);
-        ad.showInterstitial(mInterstitialAd);
+        ad.showInterstitial(mInterstitialAd, true);
     }
 
     private void loadRecords(){
@@ -246,7 +246,7 @@ public class RecordsFragment extends Fragment {
         if(file.exists()){
             if(file.delete()){
                 loadRecords();
-                ad.showInterstitial(mInterstitialAd);
+                ad.showInterstitial(mInterstitialAd, false);
             }
         }
     }

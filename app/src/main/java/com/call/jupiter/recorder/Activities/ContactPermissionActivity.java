@@ -71,6 +71,8 @@ public class ContactPermissionActivity extends AppCompatActivity {
             case 1: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     goToOtherPermission();
+
+                    AppUtility.sendEventLogToFlurry("Permission", "Contact", "Granted");
                 } else {
                     Utility.showAlertDialogOneButton(ContactPermissionActivity.this, getString(R.string.contact_description));
                 }

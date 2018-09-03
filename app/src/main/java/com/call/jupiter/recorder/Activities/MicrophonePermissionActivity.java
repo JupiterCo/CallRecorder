@@ -50,6 +50,7 @@ public class MicrophonePermissionActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(MicrophonePermissionActivity.this, new String[]{PERMISSON_NAME}, 1);
             }
         });
+
     }
 
     @Override
@@ -58,6 +59,8 @@ public class MicrophonePermissionActivity extends AppCompatActivity {
             case 1: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     goToOtherPermission();
+
+                    AppUtility.sendEventLogToFlurry("Permission", "Microphone", "Granted");
                 } else {
                     Utility.showAlertDialogOneButton(MicrophonePermissionActivity.this, getString(R.string.record_your_call_description));
                 }

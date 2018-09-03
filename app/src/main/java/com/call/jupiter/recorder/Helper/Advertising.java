@@ -12,7 +12,7 @@ import com.google.android.gms.ads.InterstitialAd;
  */
 
 public class Advertising {
-    public static GSharedPreferences sharedPreferences;
+    private static GSharedPreferences sharedPreferences;
 
     public Advertising(Context context){
         sharedPreferences = new GSharedPreferences(context);
@@ -25,9 +25,11 @@ public class Advertising {
         }
     }
 
-    public void showInterstitial(final InterstitialAd mInterstitialAd){
+    public void showInterstitial(final InterstitialAd mInterstitialAd, boolean isNeedSetUnitID) {
         if (!sharedPreferences.GET_IS_USER_PURCHASE_REMOVE_ADS()){
-            mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+            if (isNeedSetUnitID){
+                mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+            }
             mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
             mInterstitialAd.setAdListener(new AdListener(){

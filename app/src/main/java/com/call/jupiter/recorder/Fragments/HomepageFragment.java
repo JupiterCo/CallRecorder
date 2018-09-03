@@ -45,9 +45,8 @@ public class HomepageFragment extends Fragment {
     ImageView IVRunOrNot;
     private boolean isMustRunAnimation = false;
     private static String TAG = "Kontrol";
-    CallReceiver callReceiver;
-    private AdView mAdView;
-    private InterstitialAd mInterstitialAd;
+    AdView mAdView;
+    InterstitialAd mInterstitialAd;
     Advertising ad;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -93,7 +92,7 @@ public class HomepageFragment extends Fragment {
 
         ad = new Advertising(getContext());
         ad.showBanner(mAdView);
-        ad.showInterstitial(mInterstitialAd);
+        ad.showInterstitial(mInterstitialAd, true);
     }
 
     private void enableDisableProcess(){
@@ -101,14 +100,9 @@ public class HomepageFragment extends Fragment {
         if(!Utility.isMyServiceRunning(CallServices.class, getContext())) {
             getActivity().startService(new Intent(getActivity(), CallServices.class));
 
-            /*Intent serviceIntent = new Intent(getContext() ,CallServices.class);
-
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){
-                getContext().startForegroundService(serviceIntent);
-            }else{
-                getContext().startService(serviceIntent);
-            }*/
             setViewsAboutEnableOrDisable();
+
+            AppUtility.sendEventLogToFlurry("Button", "Activate", "Clicked");
         }else{
             showWantToDisableItDialog();
         }
@@ -149,6 +143,8 @@ public class HomepageFragment extends Fragment {
                         getActivity().stopService(new Intent(getActivity(), CallServices.class));
                         GlobalValues.isUserWantToStop = true;
                         setViewsAboutEnableOrDisable();
+
+                        AppUtility.sendEventLogToFlurry("Button", "Disable", "Clicked");
                     }
                 })
                 .setNegativeButton(getContext().getString(R.string.cancel), new DialogInterface.OnClickListener() {

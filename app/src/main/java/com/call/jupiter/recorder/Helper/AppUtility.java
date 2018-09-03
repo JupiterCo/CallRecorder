@@ -29,8 +29,11 @@ import com.call.jupiter.recorder.R;
 import com.call.jupiter.recorder.Fragments.RecordsFragment;
 import com.call.jupiter.recorder.Receiver.CallReceiver;
 import com.call.jupiter.recorder.RecordsMethods.GetRecords;
+import com.flurry.android.FlurryAgent;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by batuhan on 16.08.2018.
@@ -191,5 +194,15 @@ public class AppUtility {
         }
 
         if(!isMainActivity){ activity.finish(); }
+    }
+
+    public static void sendEventLogToFlurry(String Title, String ActionTitle, String Action){
+        Map<String, String> articleParams = new HashMap<String, String>();
+        articleParams.put(ActionTitle, Action);
+        FlurryAgent.logEvent(Title, articleParams);
+    }
+
+    public static void sendEventLogToFlurry(String Title){
+        FlurryAgent.logEvent(Title);
     }
 }

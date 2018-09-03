@@ -6,6 +6,7 @@ import android.os.StrictMode;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.ads.MobileAds;
 
 import io.fabric.sdk.android.Fabric;
@@ -22,6 +23,7 @@ public class MyApplication extends Application {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
         MobileAds.initialize(this, getString(R.string.admob_app_id));
+        new FlurryAgent.Builder().withLogEnabled(true).build(this, "HKB6BWXFFKXJSHWVV2DD");
         settingsForUpper24APIFileListen();
     }
 

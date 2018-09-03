@@ -47,5 +47,6 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true;
     }
-    compile 'com.anjlab.android.iab.v3:library:1.0.44'
+    implementation 'com.anjlab.android.iab.v3:library:1.0.44'
+    implementation 'com.flurry.android:analytics:11.2.0@aar'
 }
