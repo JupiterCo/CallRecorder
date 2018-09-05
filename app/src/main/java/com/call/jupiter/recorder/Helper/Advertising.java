@@ -2,6 +2,7 @@ package com.call.jupiter.recorder.Helper;
 
 import android.content.Context;
 
+import com.call.jupiter.recorder.R;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -13,8 +14,10 @@ import com.google.android.gms.ads.InterstitialAd;
 
 public class Advertising {
     private static GSharedPreferences sharedPreferences;
+    private Context context;
 
     public Advertising(Context context){
+        this.context = context;
         sharedPreferences = new GSharedPreferences(context);
     }
 
@@ -28,8 +31,9 @@ public class Advertising {
     public void showInterstitial(final InterstitialAd mInterstitialAd, boolean isNeedSetUnitID) {
         if (!sharedPreferences.GET_IS_USER_PURCHASE_REMOVE_ADS()){
             if (isNeedSetUnitID){
-                mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+                mInterstitialAd.setAdUnitId(context.getString(R.string.admob_homepage_interstitial_id));
             }
+
             mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
             mInterstitialAd.setAdListener(new AdListener(){

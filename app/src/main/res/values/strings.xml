@@ -9,7 +9,6 @@
     <string name="admob_homepage_banner_id" translatable="false">ca-app-pub-2878230486861983/6283824981</string>
     <string name="admob_homepage_interstitial_id" translatable="false">ca-app-pub-2878230486861983/4886982838</string>
     <string name="admob_records_banner_id" translatable="false">ca-app-pub-2878230486861983/7704717869</string>
-    <string name="admob_records_aftermenuclicked_interstitial_id" translatable="false">ca-app-pub-2878230486861983/8443084466</string>
     <string name="google_play_license_key" translatable="false">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArl46P2DUHTlTeSlOGv6OwRWVoTMS2RO+dmw9oWaAXSH/IXeuAHkeIqYZ3RW7O6bF1Uht6V/Z/u+8XjJUNLpycV3t2K00ySAfIMkko/ZKOmI2FJqXAl1wK6AWibb3aTBMsPv8N9j6Q2M0/cvYBiONKTTP5V7Ljnb6J+Y7LEc754kswbD7uFJ/QU4d1kx5KqMjo7vC9xOisrKRnpFSVoTufu/WcjLpGodoFQTnbW7DSY7QvAtmyat88kE6iQo6mG6qeW15Fl3sibdqGsv+WNcbSb8AXevYbqvkRXUBMd6AdLxw3QgPlMZwXLJD0qp5NJ/Hs3259csyMLcgBDqn1cc6ewIDAQAB</string>
     <string name="remove_ads_product_id" translatable="false">remove_ads_1</string>
 
