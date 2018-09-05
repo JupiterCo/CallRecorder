@@ -35,6 +35,7 @@ public class Advertising {
             }
 
             mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            
 
             mInterstitialAd.setAdListener(new AdListener(){
                 @Override
